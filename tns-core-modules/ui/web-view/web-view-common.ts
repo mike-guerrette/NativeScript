@@ -8,18 +8,11 @@ export * from "../core/view";
 
 export const srcProperty = new Property<WebViewBase, string>({ name: "src" });
 
+export type NavigationType = "linkClicked" | "formSubmitted" | "backForward" | "reload" | "formResubmitted" | "other" | undefined;
+
 export abstract class WebViewBase extends View implements WebViewDefinition {
     public static loadStartedEvent = "loadStarted";
     public static loadFinishedEvent = "loadFinished";
-
-    public static navigationTypes = [
-        "linkClicked",
-        "formSubmitted",
-        "backForward",
-        "reload",
-        "formResubmitted",
-        "other"
-    ];
 
     public src: string;
 
@@ -35,7 +28,7 @@ export abstract class WebViewBase extends View implements WebViewDefinition {
         this.notify(args);
     }
 
-    public _onLoadStarted(url: string, navigationType: string) {
+    public _onLoadStarted(url: string, navigationType: NavigationType) {
         let args = <LoadEventData>{
             eventName: WebViewBase.loadStartedEvent,
             object: this,
